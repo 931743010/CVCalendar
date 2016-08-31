@@ -288,7 +288,7 @@ extension CVCalendarView {
         contentController.presentPreviousView(nil)
     }
 
-    public func changeMode(mode: CalendarMode, completion: () -> () = {}) {
+    public func changeMode(mode: CalendarMode, animationDuration: NSTimeInterval = 0.5, completion: () -> () = {}) {
         guard let selectedDate = coordinator.selectedDayView?.date.convertedDate() where
             calendarMode != mode else {
                 return
@@ -299,12 +299,12 @@ extension CVCalendarView {
         let newController: ContentController
         switch mode {
         case .WeekView:
-            contentController.updateHeight(dayViewSize!.height, animated: true)
+            contentController.updateHeight(dayViewSize!.height, animated: true, animationDuration: animationDuration / 2.0)
             newController = WeekContentViewController(calendarView: self, frame: bounds,
                                                       presentedDate: selectedDate)
         case .MonthView:
             contentController.updateHeight(
-                contentController.presentedMonthView.potentialSize.height, animated: true)
+                contentController.presentedMonthView.potentialSize.height, animated: true, animationDuration: animationDuration / 2.0)
             newController = MonthContentViewController(calendarView: self, frame: bounds,
                                                        presentedDate: selectedDate)
         }
@@ -313,7 +313,7 @@ extension CVCalendarView {
         newController.scrollView.alpha = 0
         addSubview(newController.scrollView)
 
-        UIView.animateWithDuration(0.5, delay: 0,
+        UIView.animateWithDuration(animationDuration, delay: 0,
                                    options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             self.contentController.scrollView.alpha = 0
             newController.scrollView.alpha = 1

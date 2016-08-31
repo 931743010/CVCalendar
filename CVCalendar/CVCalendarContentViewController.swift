@@ -207,7 +207,7 @@ extension CVCalendarContentViewController {
         }
     }
 
-    public func updateHeight(height: CGFloat, animated: Bool) {
+    public func updateHeight(height: CGFloat, animated: Bool, animationDuration: NSTimeInterval = 0.2) {
         if calendarView.shouldAnimateResizing {
             var viewsToLayout = [UIView]()
             if let calendarSuperview = calendarView.superview {
@@ -226,7 +226,7 @@ extension CVCalendarContentViewController {
                     constraintIn.constant = height
 
                     if animated {
-                        UIView.animateWithDuration(0.2, delay: 0,
+                        UIView.animateWithDuration(animationDuration, delay: 0,
                                                    options: UIViewAnimationOptions.CurveLinear,
                                                    animations: {
                             self.layoutViews(viewsToLayout, toHeight: height)
