@@ -149,6 +149,20 @@ extension CVCalendarContentViewController {
 
         return index
     }
+    
+    public func identifierForIndex(index: Int) -> Identifier {
+        let identifier: Identifier
+        switch index {
+        case 0:
+            return previous
+        case 1:
+            return presented
+        case 2:
+            return following
+        default:
+            return presented
+        }
+    }
 }
 
 // MARK: - Date management
